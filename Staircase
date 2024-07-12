@@ -1,0 +1,67 @@
+/*Staircase detail
+
+This is a staircase of size :
+
+   #
+  ##
+ ###
+####
+Its base and height are both equal to . It is drawn using # symbols and spaces. The last line is not preceded by any spaces.
+
+Write a program that prints a staircase of size .*/
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'staircase' function below.
+     *
+     * The function accepts INTEGER n as parameter.
+     */
+
+    public static void staircase(int n)
+    {
+        int i=1;
+        int sizeOfSpace=n-1;
+        if(n>0&n<=100){
+             for(int row=0;row<n;row++){
+                 
+                string empty="";
+                    for(int space=0;space<sizeOfSpace;space++){
+                    empty+=" ";
+                    
+                    }
+                sizeOfSpace--;
+                for(int sharp=0;sharp<i;sharp++){
+                     empty+="#";
+                }
+                    i++;
+                   
+                    Console.WriteLine(empty);
+             }
+        }
+    }
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        int n = Convert.ToInt32(Console.ReadLine().Trim());
+
+        Result.staircase(n);
+    }
+}
