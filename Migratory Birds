@@ -1,0 +1,105 @@
+/*Given an array of bird sightings where every element represents a bird type id, determine the id of the most frequently sighted type. If more than 1 type has been spotted that maximum amount, return the smallest of their ids.
+
+Example
+
+There are two each of types  and , and one sighting of type . Pick the lower of the two types seen twice: type .
+
+Function Description
+
+Complete the migratoryBirds function in the editor below.
+
+migratoryBirds has the following parameter(s):
+
+int arr[n]: the types of birds sighted
+Returns
+
+int: the lowest type id of the most frequently sighted birds
+Input Format
+
+The first line contains an integer, , the size of .
+The second line describes  as  space-separated integers, each a type number of the bird sighted.
+
+Constraints
+
+It is guaranteed that each type is , , , , or .
+Sample Input 0
+
+6
+1 4 4 4 5 3
+Sample Output 0
+
+4
+Explanation 0
+
+The different types of birds occur in the following frequencies:
+
+Type :  bird
+Type :  birds
+Type :  bird
+Type :  birds
+Type :  bird
+The type number that occurs at the highest frequency is type , so we print  as our answer.*/
+
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'migratoryBirds' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int migratoryBirds(List<int> arr)
+    {
+        int min=0;
+        arr.Sort();
+        List<int> countedBirds=new List<int>();
+        List<int> copy=new List<int>();
+        foreach(var elem in arr.Distinct()){
+            int count = arr.Where(x => x == elem).Count();
+            countedBirds.Add(count);
+            copy.Add(elem);
+        }
+        
+        int max = countedBirds.Max();
+         
+        min=countedBirds.IndexOf(max);
+        
+        return copy[min];
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int arrCount = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
+
+        int result = Result.migratoryBirds(arr);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
