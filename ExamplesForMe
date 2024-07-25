@@ -1,0 +1,3 @@
+List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
+arr.Reverse();
+Console.WriteLine(string.Join(" ", list ));
