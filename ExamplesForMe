@@ -1,3 +1,22 @@
 List<int> arr = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList();
 arr.Reverse();
 Console.WriteLine(string.Join(" ", list ));
+
+----------------------
+
+        int sizeOfBook= Convert.ToInt32(Console.ReadLine());
+        Dictionary<string, string>  phoneBook=new  Dictionary<string, string>();
+        for(int i=0; i<sizeOfBook;i++){
+            List<string> arr = Console.ReadLine().TrimEnd().Split(' ').ToList();
+            phoneBook.Add(arr[0],arr[1]);
+        }
+        string person;
+        while ((person= Console.ReadLine()) != null) {
+            
+            if(phoneBook.ContainsKey(person)){
+                Console.WriteLine(person+"="+phoneBook[person]);
+            }else{
+               Console.WriteLine("Not found");
+            }
+        }
+-------------------------------------
