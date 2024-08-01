@@ -1,0 +1,263 @@
+/*The player with the highest score is ranked number  on the leaderboard.
+Players who have equal scores receive the same ranking number, and the next player(s) receive the immediately following ranking number.
+Example
+
+
+
+The ranked players will have ranks , , , and , respectively. If the player's scores are ,  and , their rankings after each game are ,  and . Return .
+
+Function Description
+
+Complete the climbingLeaderboard function in the editor below.
+
+climbingLeaderboard has the following parameter(s):
+
+int ranked[n]: the leaderboard scores
+int player[m]: the player's scores
+Returns
+
+int[m]: the player's rank after each new score
+Input Format
+
+The first line contains an integer , the number of players on the leaderboard.
+The next line contains  space-separated integers , the leaderboard scores in decreasing order.
+The next line contains an integer, , the number games the player plays.
+The last line contains  space-separated integers , the game scores.
+
+Constraints
+
+ for 
+ for 
+The existing leaderboard, , is in descending order.
+The player's scores, , are in ascending order.
+Subtask
+
+For  of the maximum score:
+
+Sample Input 1
+
+CopyDownload
+Array: ranked
+100
+100
+50
+40
+40
+20
+10
+
+ 
+
+
+
+Array: player
+5
+25
+50
+120
+
+ 
+7
+100 100 50 40 40 20 10
+4
+5 25 50 120
+Sample Output 1
+
+6
+4
+2
+1
+*/
+
+
+
+///Solution of cheet
+
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'climbingLeaderboard' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY ranked
+     *  2. INTEGER_ARRAY player
+     */
+
+    public static List<int> climbingLeaderboard(List<int> ranked, List<int> player)
+    {
+        List<int> playerRanks = new List<int>();
+        var rnk = ranked.Distinct().ToList();
+        player.ForEach(p =>
+        {
+    var low = 0;
+    var high = rnk.Count;
+    while (low < high)
+    {
+        var mid = (int)((low + high) / 2);
+        if (rnk[mid] > p)
+        {
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid;
+        }
+    }
+
+    playerRanks.Add(low+1);
+});
+return playerRanks;
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int rankedCount = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> ranked = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(rankedTemp => Convert.ToInt32(rankedTemp)).ToList();
+
+        int playerCount = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> player = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(playerTemp => Convert.ToInt32(playerTemp)).ToList();
+
+        List<int> result = Result.climbingLeaderboard(ranked, player);
+
+        textWriter.WriteLine(String.Join("\n", result));
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
+
+-------------------------
+//my solution-- not worked!!!
+
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Result
+{
+
+    /*
+     * Complete the 'climbingLeaderboard' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY ranked
+     *  2. INTEGER_ARRAY player
+     */
+
+    public static List<int> climbingLeaderboard(List<int> ranked, List<int> player)
+    {
+       
+        //each ranked value has a rank 
+        List<int> denseRanked =new List<int>();
+        denseRanked.Add(1);
+        for(int i=1;i<ranked.Count;i++){
+            if(ranked[i-1]==ranked[i]){
+                denseRanked.Add(denseRanked[i-1]);
+            }else{
+                denseRanked.Add(denseRanked[i-1]+1);
+            }
+        }
+        List<int> score =new List<int>();
+        int t =denseRanked.Count-1;
+        foreach(int i in player){
+            if(i>ranked.Max()){
+                //Console.WriteLine("max of rank for "+ i);
+                score.Add(1);
+                ranked.Insert(0, i);
+                denseRanked.Insert(0, 1);
+                for(int j=1;j<denseRanked.Count;j++){
+                    denseRanked[j]++;
+                }
+            }else if(i<ranked.Min()){
+                score.Add(denseRanked[t]+1);
+                ranked.Add(i);
+                denseRanked.Add(denseRanked[t]+1);
+            }
+            else{
+                while(t>=1){
+                    //Console.WriteLine("else loop t is"+ t);
+                    if(i>=ranked[t]&i<ranked[t-1]){
+                    //Console.WriteLine("i is "+ i);
+                    score.Add(denseRanked[t]);
+                    ranked.Insert(t, i);
+                    denseRanked.Insert(t,denseRanked[t]);
+                    for(int j=t+1;j<denseRanked.Count;j++){
+                        denseRanked[j]++;
+                    }
+                    
+                    break;
+                    }
+                    t--;
+                }
+                
+                
+            } 
+        }
+        
+        
+        
+        
+        
+        
+        return score;
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int rankedCount = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> ranked = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(rankedTemp => Convert.ToInt32(rankedTemp)).ToList();
+
+        int playerCount = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<int> player = Console.ReadLine().TrimEnd().Split(' ').ToList().Select(playerTemp => Convert.ToInt32(playerTemp)).ToList();
+
+        List<int> result = Result.climbingLeaderboard(ranked, player);
+
+        textWriter.WriteLine(String.Join("\n", result));
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
