@@ -13,6 +13,29 @@ class Node{
 }
 class Solution{
 
+ public static Node removeDuplicates(Node head){
+    //Write your code here
+    
+    if(head == null){
+         return null;
+    }
+       
+    HashSet<int> list = new HashSet<int>();
+    list.Add(head.data);//1
+    Node orgHead = head;
+    
+    while(head.next != null)
+    {
+        Node tmp = head.next;
+        if(!list.Add(tmp.data))
+            head.next = head.next.next;
+        else
+            head = head.next;
+    }
+    
+    return orgHead;
+  }
+
 	static int getHeight(Node root){
       //Write your code here
       Node iter=root;
@@ -64,8 +87,10 @@ class Solution{
             root=insert(root,data);            
         }
         levelOrder(root);
-   int height=getHeight(root);
+       int height=getHeight(root);
         Console.WriteLine(height);
+	head=removeDuplicates(head);
+	display(head);
         
     }
 }
