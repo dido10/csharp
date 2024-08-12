@@ -26,8 +26,7 @@ class Solution{
     
     while(head.next != null)
     {
-        Node tmp = head.next;
-        if(!list.Add(tmp.data))
+        if(!list.Add(head.next.data))
             head.next = head.next.next;
         else
             head = head.next;
